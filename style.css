@@ -1,0 +1,40 @@
+@font-face {
+    src: url('fonts/Montserrat/Montserrat-VariableFont_wght.ttf');
+    /* src: url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap'); */
+    font-family: "Montserrat", sans-serif;
+}
+
+* {
+    font-family: "Montserrat", sans-serif;
+    --main-background-color: #0a0f19;
+    --main-text-color: #EAE2DE;
+    --accent-color: #151318;
+}
+
+html, body {
+    background-color: var(--main-background-color);
+    color: var(--main-text-color);
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    height: 64px;
+    display: flex;
+    border-bottom: 2px solid var(--main-text-color);
+}
+
+main {
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+footer {
+    height: 64px;
+    border-top: 2px solid var(--main-text-color);
+}

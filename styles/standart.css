@@ -1,0 +1,15 @@
+body, html {
+    margin: 0;
+}
+
+.m-0 {
+    margin: 0;
+}
+
+.m-16 {
+    margin: 16px;
+}
+
+.p-8 {
+    padding: 8px;
+}
