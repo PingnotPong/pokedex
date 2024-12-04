@@ -14,28 +14,13 @@
 
 </head>
 
-<body>
+<body onload="init()">
     <header>
         hier steht etwas?
     </header>
     <main>
-        <div class="m-16">
-            <div class="pokemon-card">
-                <div class="card-header">
-                    <h2 class="m-0 p-8">Bulbasaur</h2>
-                    <h2 class="m-0 p-8">#2</h2>
-                </div>
-                <div class="basic-info">
-                    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/6.png"
-                        alt="">
-                    <div class="pokemon-types">
-                        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-iii/colosseum/17.png"
-                            alt="">
-                        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-iii/colosseum/11.png"
-                            alt="">
-                    </div>
-                </div>
-            </div>
+        <div class="card-container m-16" id="card-container">
+        </div>
     </main>
     <footer>
         hier auch

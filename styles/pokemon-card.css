@@ -1,5 +1,22 @@
 * {
-    --grass: ;
+    --normal: #ADAD7B;
+    --fight: #C63129;
+    --flying: #B097F7;
+    --poison: #8F3F8F;
+    --ground: #E7CE84;
+    --rock: #A5944A;
+    --bug: #A5AD4A;
+    --ghost: #715895;
+    --steel: #BDBDD6;
+    --fire: #F78431;
+    --water: #6B94F7;
+    --grass: #8CD66B;
+    --electr: #FFDE52;
+    --psychc: #FF739C;
+    --ice: #9CDEDE;
+    --dragon: #7339FF;
+    --dark: #735A4A;
+    --fairy: #EC8FE6;
 }
 
 .pokemon-card {
@@ -8,6 +25,13 @@
     border: 2px solid var(--main-text-color);
     border-radius: 16px;
     border-color: var(--main-text-color);
+    cursor: pointer;
+}
+
+.pokemon-card:hover {
+    transition: ease-in-out;
+    transition-duration: 0.1s;
+    transform: scale(1.1);
 }
 
 .card-header {
@@ -24,19 +48,102 @@
     align-items: center;
 }
 
-.pokemon-card img {
-    height: 140px;
-    width: 140px;
+.pokemon-img {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 132px;
 }
 
-.basic-info div {
+.pokemon-img img {
+    height: 132px;
+    width: 132px;
+}
+
+.pokemon-types {
     display: flex;
     justify-content: space-around;
     align-items: center;
     width: 100%;
+    border-top: 1px solid var(--main-text-color);
+    background-color: var(--accent-color);
+    border-radius: 0 0 16px 16px;
+    height: 44px;
 }
 
 .pokemon-types img {
     height: 24px;
-    max-width: 60px;
+    max-width: 76px;
 }
+
+    .normal {
+        background-color: var(--normal);
+    }
+
+    .fighting {
+        background-color: var(--fight);
+    }
+
+    .flying {
+        background-color: var(--flying);
+    }
+
+    .poison {
+        background-color: var(--poison);
+    }
+
+    .ground {
+        background-color: var(--ground);
+    }
+
+    .rock {
+        background-color: var(--rock);
+    }
+
+    .bug {
+        background-color: var(--bug);
+    }
+
+    .ghost {
+        background-color: var(--ghost);
+    }
+
+    .steel {
+        background-color: var(--steel);
+    }
+
+    .fire {
+        background-color: var(--fire);
+    }
+
+    .water {
+        background-color: var(--water);
+    }
+
+    .grass {
+        background-color: var(--grass);
+    }
+
+    .electric {
+        background-color: var(--electr);
+    }
+
+    .psychic {
+        background-color: var(--psychc);
+    }
+
+    .ice {
+        background-color: var(--ice);
+    }
+
+    .dragon {
+        background-color: var(--dragon);
+    }
+
+    .dark {
+        background-color: var(--dark);
+    }
+
+    .fairy {
+        background-color: var(--fairy);
+    }
