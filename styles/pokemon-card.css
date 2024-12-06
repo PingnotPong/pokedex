@@ -20,12 +20,14 @@
 }
 
 .pokemon-card {
-    height: 220px;
+    height: 221px;
     width: 200px;
     border: 2px solid var(--main-text-color);
     border-radius: 16px;
     border-color: var(--main-text-color);
     cursor: pointer;
+    display: flex;
+    flex-direction: column;
 }
 
 .pokemon-card:hover {

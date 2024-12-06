@@ -7,6 +7,7 @@
 * {
     font-family: "Montserrat", sans-serif;
     --main-background-color: #0a0f19;
+    --second-background-color: #0c1629;
     --main-text-color: #EAE2DE;
     --accent-color: #151318;
 }
@@ -26,12 +27,56 @@ header {
     height: 64px;
     display: flex;
     border-bottom: 2px solid var(--main-text-color);
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--second-background-color);
+}
+
+.header-logo {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.header-logo img {
+    width: 56px;
+    height: 56px;
+}
+
+.header-logo h1 {
+    margin: 0;
+}
+
+.searchbar-container {
+    display: flex;
+}
+
+.searchfield-input {
+    border: none;
+    height: 32px;
+    background-color: rgba(0, 0, 0, 0);
+    padding: 0;
+    border-radius: 17px 0 0 17px;
+    background-color: var(--main-text-color);
+    padding-left: 4px;
+}
+.searchfield-commit {
+    border: none;
+    height: 32px;
+    width: 32px;
+    cursor: pointer;
+    padding: 0;
+    border-radius: 0 17px 17px 0;
+    background-color: var(--accent-color);
+    color: var(--main-text-color);
+    font-size: 16px;
 }
 
 main {
     flex: 1;
     display: flex;
     flex-wrap: wrap;
+    align-items: flex-start;
 }
 
 .card-container {
@@ -45,4 +90,19 @@ main {
 footer {
     height: 64px;
     border-top: 2px solid var(--main-text-color);
+    background-color: var(--second-background-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+footer a {
+    background-color: var(--accent-color);
+    padding: 8px;
+    border-radius: 16px;
+    color: var(--main-text-color);
+}
+
+footer a:hover {
+    color: rgba(255, 255, 255, 0.466);
 }

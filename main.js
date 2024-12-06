@@ -3,7 +3,7 @@ const BASE_URL = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprit
 const CONTAINER_REF = document.getElementById("card-container");
 
 let loadedPokemon = "";
-let numToLoad = 10;
+let numToLoad = 3;
 
 async function init() {
     await getPokemon();
@@ -22,7 +22,6 @@ async function setCurrentPokemon(indexOfPokemon) {
 }
 
 async function renderPokemonCards() {
-    const CONTAINER_REF = document.getElementById("card-container");
     CONTAINER_REF.innerHTML = "";
     for (let i = 0; i < loadedPokemon.length; i++) {
         await setCurrentPokemon(i);
@@ -46,4 +45,35 @@ function fillTypeTemplate() {
         type += getPokemonCardTypeTemplate(typeImgUrl, typeName)
     }
     return type;
+}
+
+function openOverlay() {
+    toggleClass("body" ,"overflow-hidden");
+    toggleClass("overlay" ,"d-none");
+    renderOverlay();
+}
+
+function toggleClass(elementid, classToToggle) {
+    elementRef = document.getElementById(elementid);
+    elementRef.classList.toggle(classToToggle);
+}
+
+function renderOverlay(pokemonId) {
+
+}
+
+function closeOverlay() {
+    toggleClass("body" ,"overflow-hidden");
+    toggleClass("overlay" ,"d-none");
+}
+
+function stopPropagation(event) {
+    event.stopPropagation();
+}
+
+function test(event) {
+    if(event != undefined){
+        event.preventDefault();
+        console.log(1);
+    }
 }

@@ -9,24 +9,40 @@
     <link rel="stylesheet" href="styles/standart.css">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="styles/pokemon-card.css">
+    <link rel="stylesheet" href="styles/pokemon-overlay.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="scripts/template.js"></script>
-    <script src="main.js"></script>
+    <script src="main.js" defer></script>
 
 </head>
 
-<body onload="init()">
-    <header>
-        hier steht etwas?
+<body onload="init()" class="" id="body">
+    <header class="p-8">
+        <div class="header-logo">
+            <img src="img/pokeball.png" alt="">
+            <h1>Pokedex</h1>
+        </div>
+        <form action="" class="searchbar-container" onsubmit="test(event)">
+            <input id="search-bar" type="text" class="searchfield-input" placeholder="Search for Pokemon..." minlength="3" required>
+            <button type="submit" class="searchfield-commit">
+                <i class="fa fa-search"></i>
+            </button>
+        </form>
     </header>
     <main>
         <div class="card-container m-16" id="card-container">
         </div>
     </main>
     <footer>
-        hier auch
+        <a href="https://www.flaticon.com/free-icons/pokemon" target="_blank">Pokeball Icon from Flaticon</a>
+        <a href="https://pokeapi.co" target="_blank">Datas used from the PokeAPI</a>
     </footer>
+    <section class="overlay d-none" id="overlay" onclick="closeOverlay()">
+        <div class="detailed-info-container" onclick="stopPropagation(event)">
+            <div>id und name. rechte seite dann die typen</div>
+            <div>nochmal ein bild mit einem regler zum umschalten auf die shiny variante?</div>
+        </div>
+    </section>
 </body>
 
 </html>
-
-<!-- <a href="https://www.flaticon.com/free-icons/pokemon" title="pokemon icons">Pokemon icons created by Nikita Golubev - Flaticon</a> -->

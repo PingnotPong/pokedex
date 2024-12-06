@@ -3,6 +3,18 @@ body, html {
     box-sizing: border-box;
 }
 
+a {
+    text-decoration: none;
+}
+
+.d-none {
+    display: none !important;
+}
+
+.overflow-hidden {
+    overflow: hidden;
+}
+
 .m-0 {
     margin: 0;
 }

@@ -1,0 +1,18 @@
+.overlay {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.37);
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.detailed-info-container {
+    height: 680px;
+    width: 480px;
+    border: 3px solid var(--main-text-color);
+    border-radius: 32px;
+    background-color: var(--main-background-color);
+}

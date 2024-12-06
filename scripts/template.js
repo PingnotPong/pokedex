@@ -1,6 +1,6 @@
 function getPokemonCardTemplate(pokemonName, pokemonId, pokemonImgUrl, pokemonFirstType, pokemonTypeHTML) {
     return `
-                <div class="pokemon-card">
+                <div class="pokemon-card" onclick="openOverlay()">
                 <div class="card-header">
                     <h2 class="m-0 p-8">${pokemonName}</h2>
                     <h2 class="m-0 p-8">${pokemonId}</h2>
