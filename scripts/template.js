@@ -151,27 +151,3 @@ function getShowMoreButtonTemplate() {
             <button class="render-more-button">Show More</button>
     `
 }
-
-{/* <img id="evo-img-1"
-src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png"
-alt="">
-<img id="evo-img-1-shiny"
-src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/4.png"
-alt=""
-class="d-none">
-<i class="fa fa-angle-double-right"></i>
-<img id="evo-img-2"
-src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/5.png"
-alt="">
-<img id="evo-img-2-shiny"
-src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/5.png"
-alt=""
-class="d-none">
-<i class="fa fa-angle-double-right"></i>
-<img id="evo-img-3"
-src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png"
-alt="">
-<img id="evo-img-3-shiny"
-src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/6.png"
-alt=""
-class="d-none"> */}
