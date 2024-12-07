@@ -75,8 +75,7 @@ header {
 main {
     flex: 1;
     display: flex;
-    flex-wrap: wrap;
-    align-items: flex-start;
+    flex-direction: column;
 }
 
 .card-container {
@@ -85,6 +84,26 @@ main {
     flex-wrap: wrap;
     gap: 16px;
     justify-content: center;
+}
+
+.render-more-container {
+    display: flex;
+    justify-content: center;
+}
+
+.render-more-button {
+    height: 40px;
+    width: 152px;
+    border: 1px solid var(--main-text-color);
+    border-radius: 20px;
+    background-color: var(--accent-color);
+    color: var(--main-text-color);
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.render-more-button:hover {
+    background-color: var(--second-background-color);
 }
 
 footer {
@@ -101,8 +120,30 @@ footer a {
     padding: 8px;
     border-radius: 16px;
     color: var(--main-text-color);
+    border: 1px solid var(--main-text-color);
 }
 
 footer a:hover {
     color: rgba(255, 255, 255, 0.466);
+}
+
+.pokeball-container {
+    width: 64px;
+    height: 64px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pokeball {
+    animation: spin 4s linear infinite; /* Rotiert in 4 Sekunden komplett */
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
