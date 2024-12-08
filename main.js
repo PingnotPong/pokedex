@@ -181,22 +181,28 @@ function resetSearch() {
     loadedPokemon = 0;
     searchActive = false;
     renderPokemonCards();
+    setShowMoreButtonIfNeeded((loadedPokemon < allPokemon.length));
 }
 
-function searchForPokemon(event) {
+async function searchForPokemon(event) {
     event?.preventDefault();
-    searchfieldInput = SEARCHBAR_REF.value;
+    getSearchbarInput();
     loadedPokemon = 0;
     searchActive = true;
     filterPokemonList();
     if(searchedPokemon.length > 0) {
         setloadSpinner(RENDER_MORE_REF),
-        renderSearchedPokemon(),
+        await renderSearchedPokemon(),
         setShowMoreButtonIfNeeded((loadedPokemon < searchedPokemon.length))
     } else {
         CARD_CONTAINER_REF.innerHTML = getNoPokemonFoundTemplate();
         setShowMoreButtonIfNeeded(false)
     }
+}
+
+function getSearchbarInput() {
+    searchfieldInput = SEARCHBAR_REF.value
+    searchfieldInput = searchfieldInput.toLowerCase()
 }
 
 async function renderSearchedPokemon() {
