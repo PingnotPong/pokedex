@@ -16,7 +16,7 @@ async function init() {
     await getPokemon();
     CARD_CONTAINER_REF.innerHTML = "";
     setloadSpinner(RENDER_MORE_REF)
-    renderPokemonCards();
+    await renderPokemonCards();
     setShowMoreButtonIfNeeded((loadedPokemon < allPokemon.length));
 }
 
