@@ -15,7 +15,7 @@ let searchfieldInput = "";
 async function init() {
     await getPokemon();
     CARD_CONTAINER_REF.innerHTML = "";
-    setloadSpinner()
+    setloadSpinner(RENDER_MORE_REF)
     renderPokemonCards();
     setShowMoreButtonIfNeeded((loadedPokemon < allPokemon.length));
 }
@@ -36,25 +36,57 @@ async function renderPokemonCards() {
     let loadingbuffer = "";
     for (; loadedPokemon < numToLoad; loadedPokemon++) {
         await setCurrentPokemon(loadedPokemon);
-        loadingbuffer += fillPokemonCardTemplate(); 
+        loadingbuffer += fillPokemonCardTemplate();
     }
     CARD_CONTAINER_REF.innerHTML += loadingbuffer;
 }
 
-function setloadSpinner() {
-    RENDER_MORE_REF.innerHTML = getLoadSpinnerTemplate();
+function setloadSpinner(element) {
+    element.innerHTML = getLoadSpinnerTemplate();
 }
 
 function setShowMoreButtonIfNeeded(checkedBoolean) {
     RENDER_MORE_REF.innerHTML = checkedBoolean
-    ? getShowMoreButtonTemplate()
-    : "";
+        ? getShowMoreButtonTemplate()
+        : "";
 }
 
 function fillPokemonCardTemplate() {
     getPokemonInfo();
     return getPokemonCardTemplate(pokemonName, pokemonId, pokemonTypeHTML, pokemonFirstType);
 }
+
+function checkNextAndLastId(idToCheck) {
+    searchActive == true
+        ? calculateSearchIds(idToCheck)
+        : calculateIds(idToCheck)
+}
+
+function calculateSearchIds(idToCheck) {
+    let searchedIndex = "";
+    for (let i = 0; i < searchedPokemon.length; i++) {
+        if ((idToCheck - 1) == searchedPokemon[i]) {
+            searchedIndex = i;
+            break;
+        }
+    }
+    searchedIndex > 0 && searchedIndex < (loadedPokemon -1)
+        ? (lastId = searchedPokemon[searchedIndex - 1], nextId = searchedPokemon[searchedIndex + 1])
+        : searchedIndex === 0
+            ? (lastId = searchedPokemon[loadedPokemon - 1], nextId = searchedPokemon[searchedIndex + 1])
+            : (lastId = searchedPokemon[searchedIndex - 1], nextId = searchedPokemon[0])
+    lastId++;
+    nextId++;
+}
+
+function calculateIds(idToCheck) {
+    idToCheck > 1 && idToCheck < loadedPokemon
+        ? (lastId = idToCheck - 1, nextId = idToCheck + 1)
+        : idToCheck === 1
+            ? (lastId = loadedPokemon, nextId = idToCheck + 1)
+            : (lastId = idToCheck - 1, nextId = 1)
+}
+
 
 function fillTypeTemplate() {
     typeList = currentPokemon["types"];
@@ -69,10 +101,11 @@ function fillTypeTemplate() {
     return type;
 }
 
-function openOverlay(pokemonId,) {
+async function openOverlay(pokemonId) {
     toggleClass("overflow-hidden", "body");
     toggleClass("d-none", "overlay");
-    renderOverlay(pokemonId);
+    setloadSpinner(OVERLAY_REF);
+    await renderOverlay(pokemonId);
 }
 
 function toggleClass(classToToggle, ...elementid) {
@@ -85,7 +118,8 @@ function toggleClass(classToToggle, ...elementid) {
 async function renderOverlay(pokemonId) {
     await setCurrentPokemon(pokemonId - 1);
     await getPokemonInfo();
-    OVERLAY_REF.innerHTML = getOverlayCardTemplate(pokemonName, pokemonId, pokemonTypeHTML, baseExp, height, weight, hpInPercent, attackInPercent, defenseInPercent, specialattackInPercent, specialdefenseInPercent, speedInPercent, evoChainHTML);
+    await checkNextAndLastId(pokemonId);
+    OVERLAY_REF.innerHTML = getOverlayCardTemplate(pokemonName, pokemonId, pokemonTypeHTML, baseExp, height, weight, hpInPercent, attackInPercent, defenseInPercent, specialattackInPercent, specialdefenseInPercent, speedInPercent, evoChainHTML, lastId, nextId);
 }
 
 async function getPokemonInfo() {
@@ -115,8 +149,8 @@ async function getEvolutionChain(pokemonId) {
 
 function addEvoChain(evoLevel, evoData) {
     evoData && (
-    evoChainHTML += getEvoChainArrowTemplate(),
-    evoChainHTML += getEvoChainImgTemplate(evoLevel, evoData["species"]["url"].slice(42).replace("/", ""))
+        evoChainHTML += getEvoChainArrowTemplate(),
+        evoChainHTML += getEvoChainImgTemplate(evoLevel, evoData["species"]["url"].slice(42).replace("/", ""))
     );
 }
 
@@ -138,12 +172,14 @@ function stopPropagation(event) {
 }
 
 function checkForSearchReset() {
-    SEARCHBAR_REF.value === "" && resetSearch();
+    SEARCHBAR_REF.value.length < 3 && resetSearch();
 }
 
 function resetSearch() {
     searchfieldInput = "";
+    CARD_CONTAINER_REF.innerHTML = "";
     loadedPokemon = 0;
+    searchActive = false;
     renderPokemonCards();
 }
 
@@ -151,8 +187,9 @@ function searchForPokemon(event) {
     event?.preventDefault();
     searchfieldInput = SEARCHBAR_REF.value;
     loadedPokemon = 0;
+    searchActive = true;
     filterPokemonList();
-    setloadSpinner();
+    setloadSpinner(RENDER_MORE_REF);
     renderSearchedPokemon();
     setShowMoreButtonIfNeeded((loadedPokemon < searchedPokemon.length))
 }
@@ -165,7 +202,7 @@ async function renderSearchedPokemon() {
             await setCurrentPokemon(searchedPokemon[i]);
             loadingbuffer += fillPokemonCardTemplate();
             loadedPokemon++;
-            if(loadedPokemon == searchedPokemon.length) break;
+            if (loadedPokemon == searchedPokemon.length) break;
         }
     }
     CARD_CONTAINER_REF.innerHTML += loadingbuffer;
@@ -193,9 +230,20 @@ function changeInfoTab(selectedTab, ...deselect) {
     }
 }
 
-function showMore() {
+async function showMore() {
     numToLoad = numToLoad + 30;
+    setloadSpinner(RENDER_MORE_REF);
     searchActive
-    ? renderSearchedPokemon()
-    : renderPokemonCards();
+        ? (await renderSearchedPokemon(), setShowMoreButtonIfNeeded(loadedPokemon < searchedPokemon.length))
+        : (await renderPokemonCards(), setShowMoreButtonIfNeeded(loadedPokemon < allPokemon.length));
+}
+
+async function nextOverlayCard(nextId) {
+    setloadSpinner(OVERLAY_REF);
+    await renderOverlay(nextId);
+}
+
+async function lastOverlayCard(lastId) {
+    setloadSpinner(OVERLAY_REF);
+    await renderOverlay(lastId);
 }

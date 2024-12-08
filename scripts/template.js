@@ -1,6 +1,6 @@
-function getPokemonCardTemplate(pokemonName, pokemonId, pokemonTypeHTML, pokemonFirstType) {
+function getPokemonCardTemplate(pokemonName, pokemonId, pokemonTypeHTML, pokemonFirstType, lastId, nextId) {
     return `
-            <div class="pokemon-card" onclick="openOverlay(${pokemonId})">
+            <div class="pokemon-card" onclick="openOverlay(${pokemonId}, ${lastId}, ${nextId})">
                 <div class="card-header">
                     <h2 class="m-0 p-8">${pokemonName}</h2>
                     <h2 class="m-0 p-8">${pokemonId}#</h2>
@@ -25,7 +25,7 @@ function getPokemonCardTypeTemplate(typeImgUrl, typeName) {
     `
 }
 
-function getOverlayCardTemplate(pokemonName, pokemonId, pokemonTypeHTML, baseExp, height, weight, hpInPercent, attackInPercent, defenseInPercent, specialattackInPercent, specialdefenseInPercent, speedInPercent, evoChain) {
+function getOverlayCardTemplate(pokemonName, pokemonId, pokemonTypeHTML, baseExp, height, weight, hpInPercent, attackInPercent, defenseInPercent, specialattackInPercent, specialdefenseInPercent, speedInPercent, evoChain, lastId, nextId) {
     return`
             <div class="overlay-header p-8"><span>${pokemonName}</span><span>${pokemonId}#<button onclick="closeOverlay()">x</button></span></div>
             <div class="overlay-img-and-types">
@@ -109,8 +109,8 @@ function getOverlayCardTemplate(pokemonName, pokemonId, pokemonTypeHTML, baseExp
                 ${evoChain}
             </div>
             <div class="last-next-pokemon">
-                <button><i class="fa fa-arrow-left"></i></button>
-                <button><i class="fa fa-arrow-right"></i></button>
+                <button onclick="lastOverlayCard(${lastId})"><i class="fa fa-arrow-left"></i></button>
+                <button onclick="nextOverlayCard(${nextId})"><i class="fa fa-arrow-right"></i></button>
             </div>
     `
 }

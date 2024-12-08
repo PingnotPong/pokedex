@@ -17,6 +17,11 @@
     background-color: var(--main-background-color);
     display: flex;
     flex-direction: column;
+    justify-content: center;
+}
+
+.detailed-info-container .pokeball-container {
+    align-self: center;
 }
 
 .overlay-header {
