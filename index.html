@@ -17,33 +17,37 @@
 </head>
 
 <body onload="init()" class="" id="body">
-    <header class="p-8">
-        <div class="header-logo">
-            <img src="img/pokeball.png" alt="">
-            <h1>Pokedex</h1>
-        </div>
-        <form action="" class="searchbar-container" onsubmit="searchForPokemon(event)">
-            <input id="search-bar" type="text" class="searchfield-input" placeholder="Search for Pokemon..."
-                minlength="3" onchange="checkForSearchReset()" required>
-            <button type="submit" class="searchfield-commit">
-                <i class="fa fa-search"></i>
-            </button>
-        </form>
-    </header>
-    <main>
-        <div class="card-container m-16" id="card-container">
-        </div>
-        <div id="render-more-container" class="render-more-container m-16">
-            <button class="render-more-button">Show More</button>
-        </div>
-    </main>
-    <footer>
-        <a href="https://www.flaticon.com/free-icons/pokemon" target="_blank">Pokeball Icon from Flaticon</a>
-        <a href="https://pokeapi.co" target="_blank">Datas used from the PokeAPI</a>
-    </footer>
+    <section class="max-width-container header">
+        <header class="p-8">
+            <div class="header-logo">
+                <a href="https://pokeapi.co"><img src="img/pokeball.png" alt=""></a>
+                <h1>Pokedex</h1>
+            </div>
+            <form action="" class="searchbar-container" onsubmit="searchForPokemon(event)">
+                <input id="search-bar" type="text" class="searchfield-input" placeholder="Search for Pokemon..."
+                    minlength="3" onchange="checkForSearchReset()" required>
+                <button type="submit" class="searchfield-commit">
+                    <i class="fa fa-search"></i>
+                </button>
+            </form>
+        </header>
+    </section>
+    <section class="max-width-container main">
+        <main>
+            <div class="card-container m-16" id="card-container"></div>
+            <div id="render-more-container" class="render-more-container m-16">
+                <button class="render-more-button">Show More</button>
+            </div>
+        </main>
+    </section>
+    <section class="max-width-container footer">
+        <footer>
+            <a href="https://www.flaticon.com/free-icons/pokemon" target="_blank">Pokeball Icon from Flaticon</a>
+            <a href="https://pokeapi.co" target="_blank">Datas used from the PokeAPI</a>
+        </footer>
+    </section>
     <section class="overlay d-none" id="overlay" onclick="closeOverlay()">
-        <div class="detailed-info-container" id="detailed-info-container" onclick="stopPropagation(event)">
-        </div>
+        <div class="detailed-info-container" id="detailed-info-container" onclick="stopPropagation(event)"></div>
     </section>
 </body>
 

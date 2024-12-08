@@ -1,6 +1,6 @@
-function getPokemonCardTemplate(pokemonName, pokemonId, pokemonTypeHTML, pokemonFirstType, lastId, nextId) {
+function getPokemonCardTemplate(pokemonName, pokemonId, pokemonTypeHTML, pokemonFirstType) {
     return `
-            <div class="pokemon-card" onclick="openOverlay(${pokemonId}, ${lastId}, ${nextId})">
+            <div class="pokemon-card" onclick="openOverlay(${pokemonId})">
                 <div class="card-header">
                     <h2 class="m-0 p-8">${pokemonName}</h2>
                     <h2 class="m-0 p-8">${pokemonId}#</h2>
@@ -130,6 +130,14 @@ function getEvoChainImgTemplate(evoNr, pokemonId) {
 function getEvoChainArrowTemplate() {
     return`
             <i class="fa fa-angle-double-right"></i>
+    `
+}
+
+function getNoPokemonFoundTemplate() {
+    return`
+        <div class="no-pokemon-found">
+            <h2>No Pokemon Found</h2>
+        </div>
     `
 }
 

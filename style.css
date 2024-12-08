@@ -12,7 +12,8 @@
     --accent-color: #151318;
 }
 
-html, body {
+html,
+body {
     background-color: var(--main-background-color);
     color: var(--main-text-color);
 }
@@ -23,13 +24,29 @@ body {
     flex-direction: column;
 }
 
+.max-width-container {
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+}
+
+.max-width-container header,
+main,
+footer {
+    max-width: 1440px;
+    width: 100%;
+}
+
 header {
     height: 64px;
     display: flex;
-    border-bottom: 2px solid var(--main-text-color);
     align-items: center;
     justify-content: space-between;
+}
+
+.header {
     background-color: var(--second-background-color);
+    border-bottom: 2px solid var(--main-text-color);
 }
 
 .header-logo {
@@ -60,6 +77,7 @@ header {
     background-color: var(--main-text-color);
     padding-left: 4px;
 }
+
 .searchfield-commit {
     border: none;
     height: 32px;
@@ -76,6 +94,10 @@ main {
     flex: 1;
     display: flex;
     flex-direction: column;
+}
+
+.main {
+    flex: 1;
 }
 
 .card-container {
@@ -108,11 +130,14 @@ main {
 
 footer {
     height: 64px;
-    border-top: 2px solid var(--main-text-color);
-    background-color: var(--second-background-color);
     display: flex;
     align-items: center;
     justify-content: space-around;
+}
+
+.footer {
+    border-top: 2px solid var(--main-text-color);
+    background-color: var(--second-background-color);
 }
 
 footer a {
@@ -136,14 +161,53 @@ footer a:hover {
 }
 
 .pokeball {
-    animation: spin 4s linear infinite; /* Rotiert in 4 Sekunden komplett */
+    animation: spin 4s linear infinite;
+}
+
+.no-pokemon-found {
+    color: rgba(255, 255, 255, 0.473);
 }
 
 @keyframes spin {
     from {
         transform: rotate(0deg);
     }
+
     to {
         transform: rotate(360deg);
+    }
+}
+
+@media(max-width: 470px) {
+    .searchfield-input {
+        width: 128px;
+    }
+
+    .header-logo img {
+        height: 40px;
+        width: 40px;
+    }
+
+    .header-logo h1 {
+        display: none;
+    }
+
+    footer a {
+        padding: 2px;
+        font-size: 16px;
+        text-align: center;
+        width: 90px;
+    }
+
+    .max-width-container {
+        width: auto;
+    }
+
+    .card-container.m-16 {
+        margin: 0;
+    }
+
+    .card-container {
+        padding-top: 16px;
     }
 }

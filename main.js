@@ -189,9 +189,14 @@ function searchForPokemon(event) {
     loadedPokemon = 0;
     searchActive = true;
     filterPokemonList();
-    setloadSpinner(RENDER_MORE_REF);
-    renderSearchedPokemon();
-    setShowMoreButtonIfNeeded((loadedPokemon < searchedPokemon.length))
+    if(searchedPokemon.length > 0) {
+        setloadSpinner(RENDER_MORE_REF),
+        renderSearchedPokemon(),
+        setShowMoreButtonIfNeeded((loadedPokemon < searchedPokemon.length))
+    } else {
+        CARD_CONTAINER_REF.innerHTML = getNoPokemonFoundTemplate();
+        setShowMoreButtonIfNeeded(false)
+    }
 }
 
 async function renderSearchedPokemon() {

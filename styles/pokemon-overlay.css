@@ -58,6 +58,7 @@
 
 .overlay-pokemon-img {
     height: 240px;
+    cursor: pointer;
 }
 
 .overlay-type-container {
@@ -222,4 +223,66 @@
     border-radius: 50%;
     font-size: 20px;
     cursor: pointer;
+}
+
+@media(max-width: 470px) {
+    .detailed-info-container {
+        height: 100vh;
+        width: 100vw;
+        border-radius: 0;
+        border: none;
+    }
+
+    .overlay-header {
+        border-radius: 0;
+    }
+
+    .overlay-pokemon-img {
+        height: 120px;
+    }
+
+    .last-next-pokemon {
+        border-radius: 0;
+        height: 64px;
+    }
+
+    .last-next-pokemon button {
+        height: 56px;
+        width: 56px;
+        font-size: 40px;
+    }
+
+    #detailed-info-evo-chain img {
+        height: 88px;
+    }
+
+    .overlay-img-and-types {
+        flex-direction: column;
+    }
+
+    .overlay-type-container {
+        flex-direction: row;
+    }
+
+    .overlay-type-container img {
+        height: 24px;
+    }
+
+    .toggle-shiny {
+        position: absolute;
+        top: 70px;
+        right: 8px;
+    }
+
+    #detailed-info-main span {
+        font-size: 16px;
+    }
+
+    #detailed-info-evo-chain img {
+        height: 80px;
+    }
+
+    #detailed-info-evo-chain i {
+        font-size: 20px;
+    }
 }
