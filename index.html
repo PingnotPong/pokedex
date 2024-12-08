@@ -24,7 +24,7 @@
         </div>
         <form action="" class="searchbar-container" onsubmit="searchForPokemon(event)">
             <input id="search-bar" type="text" class="searchfield-input" placeholder="Search for Pokemon..."
-                minlength="3" required>
+                minlength="3" onchange="checkForSearchReset()" required>
             <button type="submit" class="searchfield-commit">
                 <i class="fa fa-search"></i>
             </button>
@@ -33,7 +33,7 @@
     <main>
         <div class="card-container m-16" id="card-container">
         </div>
-        <div id="render-more-container" class="render-more-container">
+        <div id="render-more-container" class="render-more-container m-16">
             <button class="render-more-button">Show More</button>
         </div>
     </main>

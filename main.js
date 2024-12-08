@@ -1,20 +1,23 @@
-const API_ALL_URL = "https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0";
+const API_ALL_URL = "https://pokeapi.co/api/v2/pokemon?limit=1025&offset=0";
 const IMG_BASE_URL = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/";
 const CARD_CONTAINER_REF = document.getElementById("card-container");
 const OVERLAY_REF = document.getElementById("detailed-info-container");
-const RENDER_MORE_REF= document.getElementById("render-more-container");
+const RENDER_MORE_REF = document.getElementById("render-more-container");
 const SEARCHBAR_REF = document.getElementById("search-bar");
 
 let allPokemon = [];
 let searchedPokemon = [];
-let numToLoad = 10;
+let numToLoad = 30;
 let loadedPokemon = 0;
-let searchbarActive = false;
+let searchActive = false;
 let searchfieldInput = "";
 
 async function init() {
     await getPokemon();
+    CARD_CONTAINER_REF.innerHTML = "";
+    setloadSpinner()
     renderPokemonCards();
+    setShowMoreButtonIfNeeded((loadedPokemon < allPokemon.length));
 }
 
 async function getPokemon() {
@@ -24,16 +27,28 @@ async function getPokemon() {
 }
 
 async function setCurrentPokemon(indexOfPokemon) {
-    currentPokemon = await fetch(allPokemon[indexOfPokemon]["url"])
-        currentPokemon = await currentPokemon.json();
+    currentUrl = allPokemon[indexOfPokemon]["url"];
+    currentPokemon = await fetch(currentUrl)
+    currentPokemon = await currentPokemon.json();
 }
 
 async function renderPokemonCards() {
-    CARD_CONTAINER_REF.innerHTML = "";
-    for (;loadedPokemon < numToLoad; loadedPokemon++) {
+    let loadingbuffer = "";
+    for (; loadedPokemon < numToLoad; loadedPokemon++) {
         await setCurrentPokemon(loadedPokemon);
-        CARD_CONTAINER_REF.innerHTML += fillPokemonCardTemplate();
+        loadingbuffer += fillPokemonCardTemplate(); 
     }
+    CARD_CONTAINER_REF.innerHTML += loadingbuffer;
+}
+
+function setloadSpinner() {
+    RENDER_MORE_REF.innerHTML = getLoadSpinnerTemplate();
+}
+
+function setShowMoreButtonIfNeeded(checkedBoolean) {
+    RENDER_MORE_REF.innerHTML = checkedBoolean
+    ? getShowMoreButtonTemplate()
+    : "";
 }
 
 function fillPokemonCardTemplate() {
@@ -44,7 +59,7 @@ function fillPokemonCardTemplate() {
 function fillTypeTemplate() {
     typeList = currentPokemon["types"];
     type = "";
-    for(let j = 0; j < typeList.length; j++) {
+    for (let j = 0; j < typeList.length; j++) {
         typeName = typeList[j]["type"]["name"];
         typeImgNr = typeList[j]["type"]["url"].slice(31);
         typeImgNr = typeImgNr.replace("/", "")
@@ -61,11 +76,9 @@ function openOverlay(pokemonId,) {
 }
 
 function toggleClass(classToToggle, ...elementid) {
-    for(let i = 0; i < elementid.length; i++) {
+    for (let i = 0; i < elementid.length; i++) {
         elementRef = document.getElementById(elementid[i]);
-        if(elementRef) {
-            elementRef.classList.toggle(classToToggle);    
-        }
+        elementRef?.classList.toggle(classToToggle);
     }
 }
 
@@ -78,7 +91,7 @@ async function renderOverlay(pokemonId) {
 async function getPokemonInfo() {
     pokemonName = currentPokemon["name"].charAt(0).toUpperCase() + currentPokemon["name"].slice(1);
     pokemonId = currentPokemon["id"];
-    pokemonFirstType = currentPokemon["types"][0]["type"]["name"];    
+    pokemonFirstType = currentPokemon["types"][0]["type"]["name"];
     pokemonTypeHTML = fillTypeTemplate();
     baseExp = currentPokemon["base_experience"];
     height = currentPokemon["height"] / 10;
@@ -95,15 +108,16 @@ async function getPokemonInfo() {
 async function getEvolutionChain(pokemonId) {
     evoJson = await getEvolutionChainJson(pokemonId);
     evoChainHTML = getEvoChainImgTemplate(1, evoJson["chain"]["species"]["url"].slice(42).replace("/", ""));
-    if(evoJson?.chain?.evolves_to?.[0]) {
-        evoChainHTML += getEvoChainArrowTemplate();
-        evoChainHTML += getEvoChainImgTemplate(2, evoJson["chain"]["evolves_to"][0]["species"]["url"].slice(42).replace("/", ""))
-    }
-    if(evoJson?.chain?.evolves_to?.[0]?.evolves_to?.[0]) {
-        evoChainHTML += getEvoChainArrowTemplate();
-        evoChainHTML += getEvoChainImgTemplate(3, evoJson["chain"]["evolves_to"][0]["evolves_to"][0]["species"]["url"].slice(42).replace("/", ""))
-    }
+    addEvoChain(2, evoJson?.chain?.evolves_to?.[0]);
+    addEvoChain(3, evoJson?.chain?.evolves_to?.[0]?.evolves_to?.[0]);
     return evoChainHTML
+}
+
+function addEvoChain(evoLevel, evoData) {
+    evoData && (
+    evoChainHTML += getEvoChainArrowTemplate(),
+    evoChainHTML += getEvoChainImgTemplate(evoLevel, evoData["species"]["url"].slice(42).replace("/", ""))
+    );
 }
 
 async function getEvolutionChainJson(pokemonId) {
@@ -123,31 +137,47 @@ function stopPropagation(event) {
     event.stopPropagation();
 }
 
+function checkForSearchReset() {
+    SEARCHBAR_REF.value === "" && resetSearch();
+}
+
+function resetSearch() {
+    searchfieldInput = "";
+    loadedPokemon = 0;
+    renderPokemonCards();
+}
+
 function searchForPokemon(event) {
     event?.preventDefault();
     searchfieldInput = SEARCHBAR_REF.value;
+    loadedPokemon = 0;
     filterPokemonList();
+    setloadSpinner();
     renderSearchedPokemon();
+    setShowMoreButtonIfNeeded((loadedPokemon < searchedPokemon.length))
 }
 
 async function renderSearchedPokemon() {
     CARD_CONTAINER_REF.innerHTML = "";
-    loadedPokemon = 0;
-    for (;loadedPokemon < numToLoad; loadedPokemon++) {
-        await setCurrentPokemon(searchedPokemon[loadedPokemon]);
-        CARD_CONTAINER_REF.innerHTML += fillPokemonCardTemplate()
+    let loadingbuffer = ""
+    if (searchfieldInput != "") {
+        for (i = loadedPokemon; i < numToLoad; i++) {
+            await setCurrentPokemon(searchedPokemon[i]);
+            loadingbuffer += fillPokemonCardTemplate();
+            loadedPokemon++;
+            if(loadedPokemon == searchedPokemon.length) break;
+        }
     }
+    CARD_CONTAINER_REF.innerHTML += loadingbuffer;
 }
 
 function filterPokemonList() {
     searchedPokemon = [];
-    for(const pokemon of allPokemon) {
-        if(pokemon.name.includes(searchfieldInput)) {
-            pokemonId = pokemon["url"].slice(34);
-            pokemonId = pokemonId.replace("/", "")    
-            searchedPokemon.push(pokemonId -1)
+    allPokemon.forEach((pokemon, index) => {
+        if (pokemon.name.includes(searchfieldInput)) {
+            searchedPokemon.push(index)
         }
-    }
+    });
 }
 
 function changeInfoTab(selectedTab, ...deselect) {
@@ -155,10 +185,17 @@ function changeInfoTab(selectedTab, ...deselect) {
     tabToSelect = document.getElementById("detailed-info-" + selectedTab)
     navToSelect.setAttribute("class", "selected");
     tabToSelect.setAttribute("class", "");
-    for(let i = 0; i < deselect.length; i++) {
-        navToDeselect = document.getElementById(deselect[i])        
-        tabToDeselect = document.getElementById("detailed-info-" + deselect[i])  
+    for (let i = 0; i < deselect.length; i++) {
+        navToDeselect = document.getElementById(deselect[i])
+        tabToDeselect = document.getElementById("detailed-info-" + deselect[i])
         navToDeselect.setAttribute("class", "");
-        tabToDeselect.setAttribute("class", "d-none");          
+        tabToDeselect.setAttribute("class", "d-none");
     }
+}
+
+function showMore() {
+    numToLoad = numToLoad + 30;
+    searchActive
+    ? renderSearchedPokemon()
+    : renderPokemonCards();
 }

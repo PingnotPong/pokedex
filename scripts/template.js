@@ -148,6 +148,6 @@ function getLoadSpinnerTemplate() {
 
 function getShowMoreButtonTemplate() {
     return`
-            <button class="render-more-button">Show More</button>
+            <button onclick="showMore()" class="render-more-button">Show More</button>
     `
 }
